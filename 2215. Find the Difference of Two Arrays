@@ -1,0 +1,54 @@
+EASY
+Description:
+Given two 0-indexed integer arrays nums1 and nums2, return a list answer of size 2 where:
+
+answer[0] is a list of all distinct integers in nums1 which are not present in nums2.
+answer[1] is a list of all distinct integers in nums2 which are not present in nums1.
+Note that the integers in the lists may be returned in any order.
+
+Solution:
+Make 2 sets with the elements of nums1 and nums2 in them. Cross remove elements from the sets. Put elements from each sets into arrays and return the array of arrays.
+
+
+#include <set>
+class Solution {
+public:
+    vector<vector<int>> findDifference(vector<int>& nums1, vector<int>& nums2) {
+        
+        set<int> n1;
+        set<int> n2;
+
+        for(int i=0; i<nums1.size();i++)
+        {
+            n1.insert(nums1[i]);
+        }
+
+        for(int i=0; i<nums2.size();i++)
+        {
+            n2.insert(nums2[i]);
+        }
+
+        for(int i=0; i<nums1.size();i++)
+        {
+            n2.erase(nums1[i]);
+        }
+
+        for(int i=0; i<nums2.size();i++)
+        {
+            n1.erase(nums2[i]);
+        }
+
+        vector<int> v1;
+        vector<int> v2;
+        for (auto i: n1)
+        {
+            v1.push_back(i);
+        }
+        for (auto i: n2)
+        {
+            v2.push_back(i);
+        }
+        return {v1,v2};
+
+    }
+};
