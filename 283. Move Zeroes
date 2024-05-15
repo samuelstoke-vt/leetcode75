@@ -1,0 +1,33 @@
+EASY
+Description:
+Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+
+Note that you must do this in-place without making a copy of the array.
+
+Solution:
+Use two pointers: one to current element and one to last unused element (a zero or current).
+Assign nonzero values to last unused element and iterate. Fill in the remaining elements with 0's.
+
+
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+
+int index = 0;
+
+for (int i = 0; i< nums.size(); i++)
+    {
+        if (nums[i] != 0)
+        {
+            nums[index] = nums[i];
+            index++;
+        }
+    }
+
+    for (int i = index; i< nums.size();i++)
+    {
+        nums[i] = 0;
+    }
+
+    }
+};
