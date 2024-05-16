@@ -1,0 +1,40 @@
+EASY
+Description:
+Given the head of a singly linked list, reverse the list, and return the reversed list.
+
+Solution:
+We use pointers of a previous, current, and next nodes. The original previous will be the head. Its next must be null. Then we update accordingly
+reversing the linked list by swapping the pointers from previous to current to next into next to current to previous.
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if(head == nullptr || head->next == nullptr)
+        {return head;}
+
+       ListNode* curr = head->next;
+       ListNode* prev = head;
+       ListNode* next;
+
+    prev->next = nullptr;
+
+       while(curr!= nullptr)
+       {
+        next = curr->next;
+        curr->next= prev;
+        prev = curr;
+        curr = next;
+       }
+       return prev;
+    }
+};
