@@ -1,0 +1,32 @@
+MEDIUM
+Desciption:
+You are given a string s, which contains stars *.
+
+In one operation, you can:
+
+Choose a star in s.
+Remove the closest non-star character to its left, as well as remove the star itself.
+Return the string after all stars have been removed.
+
+Solution:
+Queue and deqeue with stack. Push non * to the back and pop back when there is a *. Use string as the data type to save memory.
+
+class Solution {
+public:
+    string removeStars(string s) {
+        string stack = "";
+
+        for(int i=0;i<s.size();i++)
+        {
+            if (s[i] != '*')
+            {
+                stack.push_back(s[i]);
+            }
+            else if (!stack.empty())
+            {
+                stack.pop_back();
+            }
+        }
+        return stack;
+    }
+};
