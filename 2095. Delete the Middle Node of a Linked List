@@ -1,0 +1,53 @@
+MEDIUM
+Desciption:
+You are given the head of a linked list. Delete the middle node, and return the head of the modified linked list.
+
+The middle node of a linked list of size n is the ⌊n / 2⌋th node from the start using 0-based indexing, where ⌊x⌋ denotes the largest integer less than or equal to x.
+
+Solution:
+Have a slow and fast pointer in a while loop starting from the head. Have the fast one advance twice as fast and have the loop terminate when it cannot advance any further. 
+The slow pointer will be pointing at the middle element at this point. Have its next go its next's next. 
+
+Make sure to check edge cases for size 0,1,2. Otherwise should work for all.
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* deleteMiddle(ListNode* head) {
+        
+        ListNode* fast = head;
+        ListNode* slow = head;
+        if (fast == nullptr)
+        {
+            return head;
+        }
+        else if (fast->next == nullptr)
+        {
+            head = nullptr;
+            return head;
+        }
+        else {
+            fast = fast->next->next;
+            }
+        while(fast != nullptr && fast->next != nullptr)
+        {
+            fast = fast->next->next;
+            slow = slow->next;
+
+        }
+        if(slow->next != nullptr){
+        slow->next = slow->next->next;
+        }
+        return head;
+
+    }
+};
