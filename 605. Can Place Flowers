@@ -1,0 +1,44 @@
+EASY
+
+Description:
+You have a long flowerbed in which some of the plots are planted, and some are not. However, flowers cannot be planted in adjacent plots.
+
+Given an integer array flowerbed containing 0's and 1's, where 0 means empty and 1 means not empty, and an integer n, return true if n new flowers can be planted in the flowerbed without violating the no-adjacent-flowers rule and false otherwise.
+
+Solution:
+We can iterate through the flowerbed and see how many spots can be used to put new flowers down. By symmetry, there is no advantage to not place a flower immediately when a spot is found.
+A spot exists if: it is zero and its neighbors are null or zero. 
+If we find a spot, skip the next spot since it cannot be used since its neighbor is.
+
+Return a boolean for if enough spots are found.
+
+class Solution {
+public:
+    bool canPlaceFlowers(vector<int>& flowerbed, int n) {
+
+        // once a 0 is found, next 0 can be used if the following is also a 0.
+        // need n of these
+
+        // cases: 
+        // spot is 1: pass
+        // spot is 0 and previous and next is null or 0: decrease spots and skip next spot.
+        // spot is 0 and previous or next is not null or 1: pass
+
+        int spots = n;
+
+        for(int i=0; i<flowerbed.size(); i++)
+        {
+            if (flowerbed[i] == 1)
+            {
+                continue;
+            }
+            else if ( (i==0 || flowerbed[i-1] == 0) && (i==flowerbed.size()-1 || flowerbed[i+1] == 0))
+            {
+                spots--;
+                i++;
+            }
+        }
+       
+        return spots <=0;
+    }
+};
