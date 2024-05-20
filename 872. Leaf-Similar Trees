@@ -1,0 +1,58 @@
+EASY
+
+Description:
+Consider all the leaves of a binary tree, from left to right order, the values of those leaves form a leaf value sequence.
+
+For example, in the given tree above, the leaf value sequence is (6, 7, 4, 9, 8).
+
+Two binary trees are considered leaf-similar if their leaf value sequence is the same.
+
+Return true if and only if the two given trees with head nodes root1 and root2 are leaf-similar.
+
+
+Solution:
+Recursively find the leaves by searching left then right subtrees. My solution builds vectors then compares them, which is a bit inefficient but still works. It would be better to just search for the n'th leaf for each spot and see if each is equal.
+But, I am low on time so I will not redo it today.
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    bool leafSimilar(TreeNode* root1, TreeNode* root2) {
+        
+        // use a recursive leaf search to build two arrays
+        // compare the two arrays
+        return leafSeq(root1) == leafSeq(root2);
+    }
+
+    vector<int> leafSeq(TreeNode* node)
+    {
+        vector<int> seq = {};
+        if (node->left != nullptr)
+        {
+            vector<int> left = leafSeq(node->left);
+            seq.insert(seq.end(),left.begin(),left.end());
+        }
+        if (node->right != nullptr)
+        {
+            vector<int> right = leafSeq(node->right);
+            seq.insert(seq.end(),right.begin(),right.end());
+        }
+        if (node->right == nullptr && node->left == nullptr)
+        {
+            seq.push_back(node->val);
+        }
+        return seq;
+    }
+
+};
+
