@@ -1,0 +1,66 @@
+MEDIUM
+
+Description:
+Given a binary array nums and an integer k, return the maximum number of consecutive 1's in the array if you can flip at most k 0's.
+
+Solution:
+We use sliding window algorithm for this problem. We iterate through the entire array with a front and back pointer and a count for how many flips. Each step, we check the next item in the array. There are only a few cases:
+1. Front item is 1. Pass
+2. Front item is 0 and we have more flips to use. We decrease flips by one.
+3. Front item is 0 and we have no more flips to use. We increase the back until a 0 is passed.
+Then we increase the front and update the max size if front minus back is greater than current max size.
+
+Return the max size when the array is iterated.
+
+class Solution {
+public:
+    int longestOnes(vector<int>& nums, int k) {
+        
+
+        // given: array of 1's and 0's
+        // k number of 0 flips
+
+        // want to find: max number of consecutive 1's with at most k flips
+
+        // can use sliding window to find longest streak. 
+        // once k flips are used, it either grows or stays the same length with new elements
+        // pointer to back and pointer to front of subarray
+
+        int size = 0;
+        int front = 0;
+        int back = 0;
+        int flips = k;
+        
+        // cases:
+        // front is a 1: front increases, size increases. end
+        // front is a 0, flips>0. increase front increase size, decrease flips. update size
+        // front is a 0, flips = 0. increase front increase back until a 0 is passes. maintain flips. update size
+        for (int i =0; i< nums.size(); i++)
+        {
+            if (nums[i] ==1)
+            {
+                ;
+            }
+            else if (flips>0)
+            {
+                flips--;
+            }
+            else if (flips==0)
+            {
+                while(back <= front && nums[back] == 1)
+                {
+                    back++;
+                }
+                back++;
+            }
+
+            front++;
+            if ((front - back) > size)
+            {
+                size = front-back;
+            }
+        }
+
+        return size;
+    }
+};
