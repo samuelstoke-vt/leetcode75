@@ -1,0 +1,79 @@
+MEDIUM
+
+Description:
+We are given an array asteroids of integers representing asteroids in a row.
+
+For each asteroid, the absolute value represents its size, and the sign represents its direction (positive meaning right, negative meaning left). Each asteroid moves at the same speed.
+
+Find out the state of the asteroids after all collisions. If two asteroids meet, the smaller one will explode. If both are the same size, both will explode. Two asteroids moving in the same direction will never meet.
+
+
+Solution:
+We use the stack for this. There are only a few possible scenarios: right moving asteroids always get pushed to the back. Left moving asteroids destroy right moving ones until either the top of the stack is moving left, 
+or the stack is empty (in which case it is added to the back). Return the stack at the end.
+
+class Solution {
+public:
+    vector<int> asteroidCollision(vector<int>& asteroids) {
+        // array of ints for asteroids
+        // if a left hits a right, they collide
+        // smaller explodes (ties explode both)
+        // return asteroids after all explosions
+
+        // check each collision
+        // stack:
+        // put positives on stack, negatives toss or collide
+
+        vector<int> stack;
+
+        for (int i=0; i<asteroids.size(); i++)
+        {
+            int curr = asteroids[i];
+
+            if (curr>0)
+            {
+                stack.push_back(curr);
+            }
+
+            else
+            {
+                if (stack.empty())
+                {
+                    stack.push_back(curr);
+                }
+                else
+                {
+                    while (!stack.empty())
+                    {
+                        int back = stack.back();
+                        if (back < 0)
+                        {
+                        stack.push_back(curr);
+                        break;
+                        }
+                        else if (back < (-1*curr))
+                        {
+                            stack.pop_back();
+                            if (stack.empty() || stack.back() < 0)
+                            {
+                                stack.push_back(curr);
+                                break;
+                            }
+                        }
+                        else if (back == (-1*curr)) {
+                            stack.pop_back();
+                            break;
+                            }
+                        else {break;}
+                    }
+                }
+
+            }
+        }
+        return stack;
+        
+
+
+    }
+
+};
