@@ -1,0 +1,29 @@
+MEDIUM
+
+Description:
+Given an integer array nums and an integer k, return the kth largest element in the array.
+
+Note that it is the kth largest element in the sorted order, not the kth distinct element.
+
+Can you solve it without sorting?
+
+
+Solution:
+Just use a heap and remove k-1 elements then return the top. TBH... not the best solution. I'm not sure how to add things and keep them in order however, so I sorted. It's not much slower, though.
+
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+
+        make_heap(nums.begin(),nums.end());
+
+        while(!nums.empty() && k>1)
+        {
+            pop_heap(nums.begin(),nums.end());
+            nums.pop_back();
+            k--;
+        }
+        return nums[0];
+        
+    }
+};
