@@ -1,0 +1,52 @@
+MEDIUM
+
+Description:
+There is a robot on an m x n grid. The robot is initially located at the top-left corner (i.e., grid[0][0]). The robot tries to move to the bottom-right corner (i.e., grid[m - 1][n - 1]). The robot can only move either down or right at any point in time.
+
+Given the two integers m and n, return the number of possible unique paths that the robot can take to reach the bottom-right corner.
+
+The test cases are generated so that the answer will be less than or equal to 2 * 109.
+
+
+Solution:
+We see that the robot takes n-1 steps right and m-1 steps down. So the problem is to computer (m+n-2) choose (m-1). We have to create a binomial function for this that can handle large numbers as there is no good standard one.
+To do this, we keep a running value for the numerator and denominator, but flush out their GCD at all steps to avoid overflow. Then we can return the numerator. 
+
+
+#import <cmath>
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        
+        // binomial nCr of (m+n-2) choose (m-1)
+        // (m+n-2)! / (m-1)!(n-1)!
+
+        return binom(m+n-2,min(m-1,n-1)); 
+    }
+
+    int binom(int n, int r)
+    {
+        if (r==0) {return 1;}
+        else
+        {
+            long long a=1;
+            long long b=1;
+
+            while(r)
+            {
+                a *=n;
+                b *=r;
+
+                long long g = gcd(a,b);
+                a /=g;
+                b /=g;
+
+                n--;
+                r--;
+
+            }
+            return a;
+        }
+
+    }
+};
