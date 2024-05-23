@@ -1,0 +1,46 @@
+MEDIUM
+
+Description:
+Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i].
+
+The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.
+
+You must write an algorithm that runs in O(n) time and without using the division operation.
+
+
+Solution:
+We want to solve this in O(n) time. To do this, we initialize two vectors: d1 and d2 both of size n. We initialize d1[0] = d[n-1] = 1. Then, we iterate through 
+the given array and set d1[i] = d[i-1]*nums[i-1] and d2[i] = d2[i+1]*nums[i+1]. Therefore, d1 and d2 hold the products of all left and right elements at each index respectively.
+We find the product of d1 and d2 at each index and return the array.
+
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+
+        // have two vectors: d1, d2
+        // d1 has running product of indices 0 to (i-1)
+        // d2 has running product of indices i+1 to n
+        // multiply all d1[i]d2[i] 
+
+        int size = nums.size();
+        vector<int> d1(size);
+        vector<int> d2(size);
+        d1[0] = 1;
+        d2[size-1] = 1;        
+        for(int i=1; i<size;i++)
+        {
+
+            d1[i] = d1[i-1]*nums[i-1];
+            d2[size-i-1] = d2[size-i]*nums[size-i];
+
+        }
+
+        for (int i=0; i<size;i++)
+        {
+            d1[i] *=d2[i];
+        }
+
+        return d1;
+        
+    }
+};
