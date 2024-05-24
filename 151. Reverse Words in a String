@@ -1,0 +1,90 @@
+MEDIUM
+
+Description
+Given an input string s, reverse the order of the words.
+
+A word is defined as a sequence of non-space characters. The words in s will be separated by at least one space.
+
+Return a string of the words in reverse order concatenated by a single space.
+
+Note that s may contain leading or trailing spaces or multiple spaces between two words. 
+The returned string should only have a single space separating the words. Do not include any extra spaces.
+
+
+Solution:
+We can tokenize the string by words, then add them to another string in reverse order. I did this problem twice, first by
+tokenizing myself by using whitespace to terminate words, and once by using stringstream library to do it for me. 
+Only edge cases are first and last word and if there are trailing whitespaces.
+
+class Solution {
+public:
+    string reverseWords(string s) {
+
+        // iterate through the string and add words
+        // in reverse order to a new string
+
+        // keep track of: start of word, size of word
+        // use substrings to add words to new string
+
+        string r = "";
+        int size=0;
+        for(int i=0; i<s.size();i++)
+        {
+            if (s[i] == ' ')
+            {
+                if (size==0) {continue;}
+                else if(r == "")
+                {
+                   r = s.substr(i-size,size); 
+                   size =0;
+                }
+                else
+                {
+                    r = s.substr(i-size,size) + " "+ r;
+                    size = 0;
+                }
+            }
+            else
+            {
+                size++;
+            }
+
+        }
+ 
+        if(s[s.size()-1] != ' ') 
+        {
+            if(r == "")
+                {
+                   r = s.substr(s.size()-size,size); 
+                   size =0;
+                }
+                else
+                {
+                    r = s.substr(s.size()-size,size) + " "+ r; 
+                }
+           
+        }
+
+        return r;
+        
+    }
+};
+
+#include <sstream>
+class Solution {
+public:
+    string reverseWords(string s) {
+
+        stringstream ss(s);
+
+        string word;
+        string s_reverse = "";
+
+        while(ss >> word)
+        {
+            if (s_reverse == "") {s_reverse = word;}
+            else {s_reverse = word + " " + s_reverse;}
+        }
+        return s_reverse;
+    }
+};
