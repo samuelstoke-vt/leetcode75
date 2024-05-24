@@ -1,0 +1,56 @@
+MEDIUM
+
+Decription:
+There are n rooms labeled from 0 to n - 1 and all the rooms are locked except for room 0. Your goal is to visit all the rooms. However, you cannot enter a locked room without having its key.
+
+When you visit a room, you may find a set of distinct keys in it. Each key has a number on it, denoting which room it unlocks, and you can take all of them with you to unlock the other rooms.
+
+Given an array rooms where rooms[i] is the set of keys that you can obtain if you visited room i, return true if you can visit all the rooms, or false otherwise.
+
+
+Solution:
+I did this one twice. In the first try, I used a stack to hold the rooms whose keys I have (and haven't visited), then visit them popping as I go. This had not great runtime nor
+memory so I redid it.
+
+The second time I made a second function, which takes the rooms vector, a "visited" bool vector that holds if a room is visited or not, and the room number. We set all rooms to
+false for the visited vector then call visit(rooms, visited, 0) for room 0. The visit function does nothing if the room has been visited. If it has not been visited, it updates
+that room's visited status to true then valls visit on all the keys that room has. The main function then iterates through the visited array and returns true if all are true, 
+false otherwise.
+
+
+
+
+#include <stack>
+class Solution {
+public:
+    bool canVisitAllRooms(vector<vector<int>>& rooms) {
+        // hold map of all rooms and boolean for if they have been visited
+        // when visiting room i, visit all keys not in map, map them to true
+        // hold a count for new rooms visited
+        // return true if count is n at the end
+        int count = 0;
+        map<int,bool> mp;
+        stack<int> sk;
+        for (int i=0;i<rooms.size();i++)
+        {
+            mp[i] = false;
+        }
+        sk.push(0);
+        while(!sk.empty())
+        {
+            int top = sk.top();
+            mp[top] = true;
+            sk.pop();
+            count++;
+            for(auto key : rooms[top])
+            {
+                if(!mp[key])
+                {
+                    mp[key] = true;
+                    sk.push(key);
+                }
+            }
+        }    
+        return count == rooms.size();    
+    }
+};
