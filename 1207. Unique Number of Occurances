@@ -1,0 +1,44 @@
+EASY
+
+Description:
+Given an array of integers arr, return true if the number of occurrences of each value in the array is unique or false otherwise.
+
+Solution:
+We can make a map and map the integers in the array to the number of their occurances. Then we put the occurances into a set -- if we find a match while adding, return false.
+Else, return true.
+
+#include <unordered_map>
+#include <set>
+class Solution {
+public:
+    bool uniqueOccurrences(vector<int>& arr) {
+
+        map<int,int> mp;
+        set<int> st;
+
+        for (auto i : arr)
+        {
+            if (mp.find(i) == mp.end())
+            {
+                mp[i] = 1;
+            }
+            else
+            {
+                mp[i]++;
+            }
+        }
+
+        for (auto key : mp)
+        {
+            if (st.find(key.second) == st.end())
+            {
+                st.insert(key.second);
+            }
+            else
+            return false;
+        }
+        return true;
+
+        
+    }
+};
