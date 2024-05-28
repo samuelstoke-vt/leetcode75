@@ -1,0 +1,49 @@
+MEDIUM
+
+Description:
+Given an array of intervals intervals where intervals[i] = [starti, endi], 
+return the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.
+
+
+Solution:
+We use a greedy algorithm for this. First, we sort the intervals by their start index. Then, we keep a pointer to the
+front of the total "used space" in the interval. If the back of a new interval is in front of the front of the total space,
+we add this interval and increase the number of intervals in a count. If the front of the new interval is in front of the front
+of the total space, we update the front to the shorter one. 
+
+When all intervals are considered, we return the difference between the total number of intervals and the count we calculated.
+
+class Solution {
+public:
+
+static bool sortVec(const vector<int>& v1, const vector<int>& v2)
+{
+    return v1[0] < v2[0];
+}
+    int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+
+        // sort the intervals by starting index
+        // add intervals to a list with start and end index:
+        // cases: 
+        // no overlap: add and update end ptr
+        // overlaps: select the one with lower end ptr -- update count
+
+        sort(intervals.begin(),intervals.end(),sortVec);
+        int front = intervals[0][1];
+        int count = 1;
+        for (int i =1; i<intervals.size();i++)
+        {
+            if (intervals[i][0] >= front)
+            {
+                front = intervals[i][1];
+                count++;
+            }
+            else if (intervals[i][1] < front)
+            {
+                front = intervals[i][1];
+            }
+        }
+        return intervals.size() - count;
+        
+    }
+};
