@@ -1,0 +1,36 @@
+EASY
+
+Description:
+Given a string s, reverse only all the vowels in the string and return it.
+
+The vowels are 'a', 'e', 'i', 'o', and 'u', and they can appear in both lower and upper cases, more than once.
+
+Solution:
+
+Iterate through the array and store all the indices of vowels in a vector. Go through the vector and swap 
+the characters in the string as their indices appear in the vector. Return the string. 
+
+class Solution {
+public:
+    string reverseVowels(string s) {
+
+        vector<int> vowels;
+        for(int i =0; i<s.size();i++)
+        {
+            if (s[i] == 'a' || s[i] == 'e' 
+            ||s[i] == 'i' ||s[i] == 'o' ||s[i] == 'u' ||
+            s[i] == 'A' ||s[i] == 'E' ||s[i] == 'I' ||
+            s[i] == 'O' ||s[i] == 'U')
+            {
+                vowels.push_back(i);
+            }
+        }
+
+        for (int i =0; i<vowels.size()/2;i++)
+        {
+            swap(s[vowels[i]], s[vowels[vowels.size()-i-1]]);
+        }
+        return s;
+        
+    }
+};
