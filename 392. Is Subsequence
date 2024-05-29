@@ -1,0 +1,35 @@
+EASY
+
+Description:
+Given two strings s and t, return true if s is a subsequence of t, or false otherwise.
+
+A subsequence of a string is a new string that is formed from the original string by deleting some 
+(can be none) of the characters without disturbing the relative positions of the remaining characters. 
+(i.e., "ace" is a subsequence of "abcde" while "aec" is not).
+
+
+Solution:
+Keep a pointer to next value in s that needs to be in t. Iterate through t until its found and update both pointers accordingly.
+Only edge case is empty string for s.
+
+class Solution {
+public:
+    bool isSubsequence(string s, string t) {
+        
+        if (s == "") {return true;}
+
+        int count = 0;
+        for (int i =0; i<t.size();i++)
+        {
+            if(s[count] == t[i])
+            {
+                count++;
+            }
+            if (count == s.size())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+};
